@@ -16,9 +16,28 @@
         </h2>
       </div>
 
-      <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form class="space-y-6" action="{{ route('register') }}" method="POST">
+      <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-md">
+        <form x-data="{ on: false }" class="space-y-6" action="{{ route('register') }}" method="POST">
           @csrf
+          <input type="hidden" name="role" :value="on ? 'laundry' : 'mahasiswa'" required autocomplete="role">
+          <div class="flex items-center justify-center bg-white p-8">
+            <h2 class="px-4 text-center text-xl leading-9 tracking-tight"
+              :class="{ 'font-bold': !(on), 'text-gray-900': !(on), 'text-gray-400': on }">
+              Mahasiswa
+            </h2>
+            <button type="button"
+              class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 bg-indigo-600"
+              role="switch" aria-checked="true" @click="on = !on"
+              :class="{ 'bg-indigo-600': on, 'bg-gray-200': !(on) }">
+              <span aria-hidden="true"
+                class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-5"
+                :class="{ 'translate-x-5': on, 'translate-x-0': !(on) }"></span>
+            </button>
+            <h2 class="px-4 text-center text-xl leading-9 tracking-tight"
+              :class="{ 'font-bold': on, 'text-gray-900': on, 'text-gray-400': !(on) }">
+              Pihak Laundry
+            </h2>
+          </div>
           <div>
             <label for="name" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
             <div class="mt-2">
@@ -46,6 +65,17 @@
                 <strong>{{ $message }}</strong>
               </span>
               @enderror
+            </div>
+          </div>
+
+          <div>
+            <label :for="on ? 'telp' : 'nim'" class="block text-sm font-medium leading-6 text-gray-900"
+              x-text="on ? 'No. Telp' : 'NIM'">
+            </label>
+            <div class="mt-2">
+              <input :id="on ? 'telp' : 'nim'" type="text"
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                :name="on ? 'telp' : 'nim'" required :autocomplete="on ? 'telp' : 'nim'">
             </div>
           </div>
 

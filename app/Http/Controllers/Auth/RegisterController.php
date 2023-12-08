@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
-    /*
+  /*
     |--------------------------------------------------------------------------
     | Register Controller
     |--------------------------------------------------------------------------
@@ -23,53 +23,76 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+  use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
+  /**
+   * Where to redirect users after registration.
+   *
+   * @var string
+   */
+  protected $redirectTo = RouteServiceProvider::HOME;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest');
+  /**
+   * Create a new controller instance.
+   *
+   * @return void
+   */
+  public function __construct()
+  {
+    $this->middleware('guest');
+  }
+
+  /**
+   * Get a validator for an incoming registration request.
+   *
+   * @param  array  $data
+   * @return \Illuminate\Contracts\Validation\Validator
+   */
+  protected function validator(array $data)
+  {
+    if ($data['role'] === 'mahasiswa') {
+      return Validator::make($data, [
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        'password' => ['required', 'string', 'min:8', 'confirmed'],
+        'nim' => ['required', 'string', 'max:24'],
+      ]);
+    } else if ($data['role'] === 'laundry') {
+      return Validator::make($data, [
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        'password' => ['required', 'string', 'min:8', 'confirmed'],
+        'telp' => ['required', 'string', 'max:24'],
+      ]);
     }
+  }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+  /**
+   * Create a new user instance after a valid registration.
+   *
+   * @param  array  $data
+   * @return \App\Models\User
+   */
+  protected function create(array $data)
+  {
+    if ($data['role'] === 'mahasiswa') {
+      return User::create([
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'password' => Hash::make($data['password']),
+        'name_slug' => Str::of($data['name'])->slug('-'),
+        'role' => $data['role'],
+        'nim' => $data['nim'],
+      ]);
+    } else if ($data['role'] === 'laundry') {
+      return User::create([
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'password' => Hash::make($data['password']),
+        'name_slug' => Str::of($data['name'])->slug('-'),
+        'role' => $data['role'],
+        'telp' => $data['telp'],
+      ]);
     }
-
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'name_slug' => Str::of($data['name'])->slug('-')
-        ]);
-    }
+  }
 }
