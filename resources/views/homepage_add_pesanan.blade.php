@@ -1,5 +1,5 @@
 <form enctype="multipart/form-data" wire:submit.prevent="createPakaian">
-  <h3 class="font-bold text-center text-3xl text-gray-900 pb-4">Daftarkan Pakaian Laundry</h3>
+  <h3 class="font-bold text-center text-3xl text-gray-900 pb-4">Buat Pesanan Laundry Anda</h3>
 
   {{-- 1 --}}
   <div class="mx-auto max-w-7xl divide-y divide-gray-200 lg:flex lg:justify-center lg:divide-x lg:divide-y-0 lg:pt-8">
