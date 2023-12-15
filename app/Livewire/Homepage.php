@@ -13,10 +13,30 @@ class Homepage extends Component
   public $pakaian = [];
   public $deskripsi;
   public $pesanan;
+  public $jenisPakaian;
 
   public function render()
   {
-    return view('homepage')->title('Homepage');
+    if (Pesanan::where('user_id', auth()->id())->exists()) {
+      return view('homepage_my_pesanan')->title('Homepage');
+    } else {
+      return view('homepage_add_pesanan')->title('Homepage');
+    }
+  }
+
+  public function boot()
+  {
+    if (Pesanan::where('user_id', auth()->id())->exists()) {
+      $this->pesanan = Pesanan::where('user_id', auth()->id())->first();
+      $this->jenisPakaian = [
+        'baju' => 'Baju',
+        'celana' => 'Celana',
+        'jaket' => 'Jaket/Hoodie',
+        'sprei' => 'Sprei',
+        'handuk' => 'Handuk',
+        'selimut' => 'Selimut'
+      ];
+    }
   }
 
   public function createPakaian()
@@ -53,5 +73,7 @@ class Homepage extends Component
     }
     // } catch (\Throwable $th) {
     // }
+
+    $this->boot();
   }
 }
