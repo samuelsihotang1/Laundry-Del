@@ -68,7 +68,7 @@
                   <li>
                     <ul role="list" class="-mx-2 space-y-1">
                       <li>
-                        <a href="#"
+                        <a href="{{ route('homepage') }}"
                           class="bg-gray-50 text-indigo-600 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                           x-state:on="Current" x-state:off="Default"
                           x-state-description="Current: &quot;bg-gray-50 text-indigo-600&quot;, Default: &quot;text-gray-700 hover:text-indigo-600 hover:bg-gray-50&quot;">
@@ -78,7 +78,11 @@
                               d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25">
                             </path>
                           </svg>
+                          @if (auth()->user()->role === 'mahasiswa')
                           Data Laundry
+                          @elseif (auth()->user()->role === 'laundry')
+                          Data Mahasiswa
+                          @endif
                         </a>
                       </li>
                     </ul>
@@ -106,7 +110,7 @@
               <li>
                 <ul role="list" class="-mx-2 space-y-1">
                   <li>
-                    <a href="#"
+                    <a href="{{ route('homepage') }}"
                       class="bg-gray-50 text-indigo-600 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                       x-state:on="Current" x-state:off="Default"
                       x-state-description="Current: &quot;bg-gray-50 text-indigo-600&quot;, Default: &quot;text-gray-700 hover:text-indigo-600 hover:bg-gray-50&quot;">
@@ -116,7 +120,11 @@
                           d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25">
                         </path>
                       </svg>
+                      @if (auth()->user()->role === 'mahasiswa')
                       Data Laundry
+                      @elseif (auth()->user()->role === 'laundry')
+                      Data Mahasiswa
+                      @endif
                     </a>
                   </li>
 
@@ -153,9 +161,9 @@
               <div class="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-200" aria-hidden="true"></div>
 
               <!-- Profile dropdown -->
-              <span class="mr-4 text-lg font-semibold leading-6 text-gray-900" aria-hidden="true">
+              <a href="#" class="mr-4 text-lg font-semibold leading-6 text-gray-900">
                 Contact
-              </span>
+              </a>
               <div x-data="Components.menu({ open: false })" x-init="init()"
                 @keydown.escape.stop="open = false; focusButton()" @click.away="onClickAway($event)" class="relative">
                 <button type="button" class="-m-1.5 flex items-center p-1.5" id="user-menu-button" x-ref="button"
