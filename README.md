@@ -4,7 +4,7 @@
 ## Laundry Del
 A website that can help students and laundry staff find out information about all orders and student clothes.
 <br>
-<a href="https://laundry.samuelsihotang.my.id/">Laundry Del</a>
+<a href="https://laundry.samz.my.id">Laundry Del</a>
 
 ### Made with
 - HTML
